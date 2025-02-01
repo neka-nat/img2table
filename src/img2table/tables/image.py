@@ -24,6 +24,8 @@ from img2table.tables.processing.borderless_tables import identify_borderless_ta
 class TableImage:
     img: np.ndarray
     min_confidence: int = 50
+    k1: float = 1.5
+    k2: float = 4
     char_length: float = None
     median_line_sep: float = None
     thresh: np.ndarray = None
@@ -60,7 +62,7 @@ class TableImage:
         :return:
         """
         # Compute parameters for line detection
-        min_line_length = int(min(1.5 * self.median_line_sep, 4 * self.char_length)) if self.median_line_sep else 20
+        min_line_length = int(min(self.k1 * self.median_line_sep, self.k2 * self.char_length)) if self.median_line_sep else 20
 
         # Detect rows in image
         h_lines, v_lines = detect_lines(img=self.img,

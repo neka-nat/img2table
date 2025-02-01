@@ -112,7 +112,7 @@ class Document(Validations):
                 for k, v in tables.items()}
 
     def extract_tables(self, ocr: "OCRInstance" = None, implicit_rows: bool = False, implicit_columns: bool = False,
-                       borderless_tables: bool = False, min_confidence: int = 50) -> Dict[int, List[ExtractedTable]]:
+                       borderless_tables: bool = False, min_confidence: int = 50, k1: float = 1.5, k2: float = 4) -> Dict[int, List[ExtractedTable]]:
         """
         Extract tables from document
         :param ocr: OCRInstance object used to extract table content
@@ -125,9 +125,11 @@ class Document(Validations):
         # Extract tables from document
         from img2table.tables.image import TableImage
         tables = {idx: TableImage(img=img,
-                                  min_confidence=min_confidence).extract_tables(implicit_rows=implicit_rows,
-                                                                                implicit_columns=implicit_columns,
-                                                                                borderless_tables=borderless_tables)
+                                  min_confidence=min_confidence,
+                                  k1=k1,
+                                  k2=k2).extract_tables(implicit_rows=implicit_rows,
+                                                       implicit_columns=implicit_columns,
+                                                       borderless_tables=borderless_tables)
                   for idx, img in enumerate(self.images)}
 
         # Update table content with OCR if possible
