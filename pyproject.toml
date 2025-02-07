@@ -1,3 +1,23 @@
+[project]
+name = "img2table"
+version = "1.4.0"
+description = "img2table is a table identification and extraction Python Library for PDF and images, based on OpenCV image processing."
+readme = "README.md"
+authors = [
+    { name = "Xavier Canton", email = "XXXX@XXXX.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "polars[pandas]>=1.2",
+    "pyarrow>=7",
+    "numpy",
+    "pypdfium2",
+    "opencv-contrib-python>=4",
+    "numba",
+    "beautifulsoup4",
+    "xlsxwriter>=3.0.6",
+]
+
 [build-system]
-requires = ["pbr>=5.7.0", "setuptools>=42"]
-build-backend = "pbr.build"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
