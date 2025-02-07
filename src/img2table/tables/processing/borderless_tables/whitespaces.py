@@ -9,7 +9,7 @@ from img2table.tables.objects.cell import Cell
 from img2table.tables.processing.borderless_tables.model import ImageSegment, ColumnGroup, Whitespace
 
 
-@njit("List(List(List(int64)))(float64[:,:],float64,float64,float64,boolean)", cache=True, fastmath=True)
+@njit("List(List(List(int64)))(float64[:,:],float64,float64,float64,boolean)", fastmath=True)
 def compute_whitespaces(elements_array: np.ndarray, min_width: float, min_height: float, total_height: float,
                         continuous: bool = True) -> List[List[List[int]]]:
     """

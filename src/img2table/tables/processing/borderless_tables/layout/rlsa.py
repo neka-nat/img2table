@@ -15,7 +15,7 @@ from img2table.tables.objects.line import Line
 from img2table.tables.objects.table import Table
 
 
-@njit("int32[:,:](int32[:,:],int32[:,:],float64,float64)", fastmath=True, cache=True, parallel=False)
+@njit("int32[:,:](int32[:,:],int32[:,:],float64,float64)", fastmath=True, parallel=False)
 def remove_noise(cc: np.ndarray, cc_stats: np.ndarray, average_height: float, median_width: float) -> np.ndarray:
     """
     Remove noise from detected connected components
@@ -52,7 +52,7 @@ def remove_noise(cc: np.ndarray, cc_stats: np.ndarray, average_height: float, me
     return cc
 
 
-@njit("uint8[:,:](int32[:,:],int32[:,:],float64,float64,float64)", fastmath=True, cache=True, parallel=False)
+@njit("uint8[:,:](int32[:,:],int32[:,:],float64,float64,float64)", fastmath=True, parallel=False)
 def adaptive_rlsa(cc: np.ndarray, cc_stats: np.ndarray, a: float, th: float, c: float) -> np.ndarray:
     """
     Implementation of adaptive run-length smoothing algorithm
@@ -115,7 +115,7 @@ def adaptive_rlsa(cc: np.ndarray, cc_stats: np.ndarray, a: float, th: float, c: 
     return rsla_img
 
 
-@njit("boolean[:,:](uint8[:,:],float64)", fastmath=True, cache=True, parallel=False)
+@njit("boolean[:,:](uint8[:,:],float64)", fastmath=True, parallel=False)
 def find_obstacles(img: np.ndarray, min_width: float) -> np.ndarray:
     """
     Identify obstacles (columns, line gaps) in image
@@ -157,7 +157,7 @@ def find_obstacles(img: np.ndarray, min_width: float) -> np.ndarray:
     return mask_obstacles
 
 
-@njit("boolean[:, :](uint8[:, :],int32[:, :],float64,float64)", fastmath=True, cache=True, parallel=False)
+@njit("boolean[:, :](uint8[:, :],int32[:, :],float64,float64)", fastmath=True, parallel=False)
 def get_text_mask(thresh: np.ndarray, cc_stats_rlsa: np.ndarray, char_length: float,
                   median_width: float) -> np.ndarray:
     """

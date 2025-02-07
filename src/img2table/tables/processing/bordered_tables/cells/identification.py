@@ -8,7 +8,7 @@ from img2table.tables.objects.cell import Cell
 from img2table.tables.objects.line import Line
 
 
-@njit("int64[:,:](int64[:,:],int64[:,:])", cache=True, fastmath=True)
+@njit("int64[:,:](int64[:,:],int64[:,:])", fastmath=True)
 def identify_cells(h_lines_arr: np.ndarray, v_lines_arr: np.ndarray) -> np.ndarray:
     """
     Identify cells from lines

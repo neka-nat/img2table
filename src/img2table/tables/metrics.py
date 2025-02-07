@@ -9,7 +9,7 @@ from numba import njit, prange
 from img2table.tables.objects.cell import Cell
 
 
-@njit("int32[:,:](int32[:,:],int32[:,:])", fastmath=True, cache=True, parallel=False)
+@njit("int32[:,:](int32[:,:],int32[:,:])", fastmath=True, parallel=False)
 def remove_dots(cc_labels: np.ndarray, stats: np.ndarray) -> np.ndarray:
     """
     Remove dots from connected components
@@ -54,7 +54,7 @@ def remove_dots(cc_labels: np.ndarray, stats: np.ndarray) -> np.ndarray:
     return np.array(cc_to_keep) if cc_to_keep else np.empty((0, 5), dtype=np.int32)
 
 
-@njit("int32[:,:](float64[:,:])", cache=True, fastmath=True, parallel=False)
+@njit("int32[:,:](float64[:,:])", fastmath=True, parallel=False)
 def remove_dotted_lines(complete_stats: np.ndarray) -> np.ndarray:
     """
     Remove dotted lines in image by identifying aligned connected components
@@ -147,7 +147,7 @@ def remove_dotted_lines(complete_stats: np.ndarray) -> np.ndarray:
     return np.array(kept_cc).astype(np.int32) if kept_cc else np.empty((0, 5), dtype=np.int32)
 
 
-@njit("UniTuple(int32[:,:], 2)(int32[:,:])", cache=True, fastmath=True, parallel=False)
+@njit("UniTuple(int32[:,:], 2)(int32[:,:])", fastmath=True, parallel=False)
 def filter_cc(stats: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
     """
     Filter relevant connected components
@@ -203,7 +203,7 @@ def filter_cc(stats: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
     return kept_array, discarded_array
 
 
-@njit("Tuple((uint8[:,:],int32[:,:]))(uint8[:,:],int32[:,:],int32[:,:],float64)", fastmath=True, cache=True,
+@njit("Tuple((uint8[:,:],int32[:,:]))(uint8[:,:],int32[:,:],int32[:,:],float64)", fastmath=True,
       parallel=False)
 def create_character_thresh(thresh: np.ndarray, stats: np.ndarray, discarded_stats: np.ndarray,
                             char_length: float) -> Tuple[np.ndarray, np.ndarray]:
@@ -295,7 +295,7 @@ def compute_char_length(thresh: np.ndarray) -> Tuple[Optional[float], Optional[n
         return None, None, None
 
 
-@njit("int64[:,:](int32[:,:],int32[:,:])", cache=True, fastmath=True)
+@njit("int64[:,:](int32[:,:],int32[:,:])", fastmath=True)
 def recompute_contours(stats: np.ndarray, chars_array: np.ndarray) -> np.ndarray:
     """
     Recompute contours from CC analysis with original characters
@@ -329,7 +329,7 @@ def recompute_contours(stats: np.ndarray, chars_array: np.ndarray) -> np.ndarray
     return np.array(list_contours) if list_contours else np.empty((0, 4), dtype=np.int64)
 
 
-@njit("List(float64)(int64[:,:])", cache=True, fastmath=True, parallel=False)
+@njit("List(float64)(int64[:,:])", fastmath=True, parallel=False)
 def get_row_separations(stats: np.ndarray) -> List[float]:
     """
     Compute row separation between contours

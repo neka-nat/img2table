@@ -59,7 +59,7 @@ def get_connected_components(img: np.ndarray) -> Tuple[np.ndarray, float, np.nda
     return filtered_centroids, median_height, thresh
 
 
-@njit("List(float64)(float64[:,:],float64)", fastmath=True, cache=True, parallel=False)
+@njit("List(float64)(float64[:,:],float64)", fastmath=True, parallel=False)
 def compute_angles(centroids: np.ndarray, ref_height: float) -> List[float]:
     angles = list()
 
