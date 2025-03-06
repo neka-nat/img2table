@@ -1,14 +1,16 @@
 # coding: utf-8
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Optional, List, OrderedDict, NamedTuple
 
+from dataclasses_json import config, dataclass_json
 import pandas as pd
 from bs4 import BeautifulSoup
 from xlsxwriter.format import Format
 from xlsxwriter.worksheet import Worksheet
 
 
+@dataclass_json
 @dataclass
 class BBox:
     x1: int
@@ -17,6 +19,7 @@ class BBox:
     y2: int
 
 
+@dataclass_json
 @dataclass
 class TableCell:
     bbox: BBox
@@ -129,6 +132,7 @@ def create_all_rectangles(cell_positions: List[CellPosition]) -> List[CellSpan]:
         return [cell_span]
 
 
+@dataclass_json
 @dataclass
 class ExtractedTable:
     bbox: BBox
